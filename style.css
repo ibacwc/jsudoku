@@ -1,0 +1,15 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+h1{
+	text-align: center;
+}
+#main{
+	display: flex;
+	justify-content: center;
+}
+canvas {
+	margin: 5px;
+	border: 1px solid black;
+}
