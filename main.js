@@ -15,7 +15,6 @@ function generate_sudoku(){
 			numbers[x][y]=Math.floor(Math.random() * (9-1) + 1);
 		}
 	}
-	console.log(numbers)
 }
 
 function render(){
