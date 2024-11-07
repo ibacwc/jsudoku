@@ -27,11 +27,13 @@ function generate_sudoku(){
 		}
 	}
 }
-//recursive death
 function solve_sudoku(){
-	while(!solved){
-		generate_sudoku();
-	}
+	/*
+	loop through elements (9^9)
+	insert element 1-9, check if valid(uhoh)(27?)
+	rinse&repeat!
+	time complexity = oh no
+	*/
 }
 
 function render(){
@@ -101,6 +103,8 @@ function valid_pos(x, y){
 window.requestAnimationFrame(game_loop);
 function game_loop(){
 	render();
-	solve_sudoku();
+	if(!solved){
+		solve_sudoku();
+	}
 	window.requestAnimationFrame(game_loop);
 }
