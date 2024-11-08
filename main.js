@@ -34,6 +34,14 @@ function solve_sudoku(){
 	rinse&repeat!
 	time complexity = oh no
 	*/
+	for(let x = 0; x<9;++x){
+		for(let y=0; y<9; ++y){
+			if(!valid_pos(x,y)){
+				if(numbers[x][y]>9){
+				}
+			}
+		}
+	}
 }
 
 function render(){
@@ -79,6 +87,9 @@ function render(){
 generate_sudoku();
 
 function valid_pos(x, y){
+	if(numbers[x][y]==0){
+		return false;
+	}
 	for(let i = 0; i<9; ++i){
 		if(i != x && numbers[x][y] == numbers[i][y]){
 			return false;
@@ -91,8 +102,14 @@ function valid_pos(x, y){
 	}
 	let square = [Math.floor(x/3)*3, Math.floor(y/3)*3];
 	for(let i = square[0]; i<square[0]+3; ++ i){
+		if (i == x){
+			continue;
+		}
 		for (let j = square[1]; j < square[1] + 3; ++j){
-			if(x != i && y != j && numbers[x][y] == numbers[i][j]){
+			if (j == y){
+				continue;
+			}
+			if(numbers[x][y] == numbers[i][j]){
 				return false;
 			}
 		}
