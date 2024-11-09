@@ -15,7 +15,7 @@ function generate_sudoku(){
 	for(let x=0; x<9;++x){
 		numbers[x] = new Array();
 		for(let y = 0;y<9;++y){
-			numbers[x][y]=Math.floor(Math.random() * (9-1) + 1);
+			numbers[x][y]=Math.floor(Math.random() * (10-1) + 1);
 		}
 	}
 	for(let x=0; x<9;++x){
@@ -28,12 +28,6 @@ function generate_sudoku(){
 	}
 }
 function solve_sudoku(){
-	/*
-	loop through elements (9^9)
-	insert element 1-9, check if valid(uhoh)(27?)
-	rinse&repeat!
-	time complexity = oh no
-	*/
 	for(let x = 0; x<9;++x){
 		for(let y=0; y<9; ++y){
 			if(!valid_pos(x,y)){
