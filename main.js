@@ -11,31 +11,41 @@ let numbers = new Array();
 let solved = false
 
 function generate_sudoku(){
-	solved = true;
 	for(let x=0; x<9;++x){
 		numbers[x] = new Array();
 		for(let y = 0;y<9;++y){
-			numbers[x][y]=Math.floor(Math.random() * (10-1) + 1);
+			numbers[x][y]=0;
 		}
 	}
 	for(let x=0; x<9;++x){
 		for(let y = 0;y<9;++y){
-			if(!valid_pos(x,y)){
+			if(!valid_pos(numbers, numbers[x][y], x, y)){
 				numbers[x][y] = 0;
-				solved = false;
 			}
 		}
 	}
 }
-function solve_sudoku(){
-	for(let x = 0; x<9;++x){
-		for(let y=0; y<9; ++y){
-			if(!valid_pos(x,y)){
-				if(numbers[x][y]>9){
+
+function solve_sudoku(grid, row, column){
+	if (row==9){
+		return true;
+	}else if(column == 9){
+		return solve_sudoku(grid, row+1, 0);
+	}else if(grid[column][row] != 0){
+		return solve_sudoku(grid, row, column+1);
+	}else{
+		for(let n = 1; n<10; ++n){
+			if(valid_pos(grid, n, column, row)){
+				grid[column][row] = n;
+				if(solve_sudoku(grid, row, column+1)){
+					return true;
 				}
+				grid[column][row]=0;
 			}
 		}
+		return false;
 	}
+	
 }
 
 function render(){
@@ -78,19 +88,15 @@ function render(){
 		}
 	}
 }
-generate_sudoku();
 
-function valid_pos(x, y){
-	if(numbers[x][y]==0){
-		return false;
-	}
+function valid_pos(grid, num, x, y){
 	for(let i = 0; i<9; ++i){
-		if(i != x && numbers[x][y] == numbers[i][y]){
+		if(i != x && num == grid[i][y]){
 			return false;
 		}
 	}
 	for(let i = 0; i<9; ++i){
-		if(i != y && numbers[x][y] == numbers[x][i]){
+		if(i != y && num == grid[x][i]){
 			return false;
 		}
 	}
@@ -103,7 +109,7 @@ function valid_pos(x, y){
 			if (j == y){
 				continue;
 			}
-			if(numbers[x][y] == numbers[i][j]){
+			if(num == grid[i][j]){
 				return false;
 			}
 		}
@@ -111,11 +117,10 @@ function valid_pos(x, y){
 	return true;
 }
 
+generate_sudoku();
 window.requestAnimationFrame(game_loop);
+solved = solve_sudoku(numbers, 0,0);
 function game_loop(){
 	render();
-	if(!solved){
-		solve_sudoku();
-	}
 	window.requestAnimationFrame(game_loop);
 }
